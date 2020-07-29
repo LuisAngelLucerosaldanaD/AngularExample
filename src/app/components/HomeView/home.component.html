@@ -1,0 +1,40 @@
+<h1>Estas en el Home</h1>
+<div>
+  <p>name:{{ name }}</p>
+  <p>street: {{ address.street }}</p>
+  <p>city: {{ address.city }}</p>
+  <ul>
+    <li *ngFor="let hobby of hobbies">
+      {{ hobby }}
+    </li>
+  </ul>
+</div>
+<div class="card col-md-4 text-center">
+  <div class="card-header">
+    formulario
+  </div>
+  <div class="card-body">
+    <form (submit)="loginUser(userName, password)">
+      <div class="form-group">
+        <input
+          class="form-control"
+          type="text"
+          placeholder="Ingrese su username"
+          #userName
+          required
+        />
+      </div>
+      <div class="form-group">
+        <input
+          class="form-control"
+          type="password"
+          #password
+          placeholder="Ingrese su contraseña"
+          required
+        />
+      </div>
+
+      <button class="btn btn-outline-success btn-lg btn-block">enviar</button>
+    </form>
+  </div>
+</div>
