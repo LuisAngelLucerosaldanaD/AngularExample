@@ -16,8 +16,13 @@ export class FormCreateComponent implements OnInit {
   product: Product[];
   model: any = {};
   form: FormGroup;
+  subTotal: number;
+  impBolsas: number;
+  descuento: number;
+  total: number;
+  igv: number;
 
-  constructor() {
+  constructor(private formBuilder: FormBuilder) {
     this.buildForm();
     this.products = [
       {
@@ -32,48 +37,64 @@ export class FormCreateComponent implements OnInit {
         unidad: 'caja',
       },
     ];
+    this.subTotal = 0;
+    this.descuento = 0;
+    this.impBolsas = 0;
+    this.total = 0;
+    this.igv = 0;
   }
 
   ngOnInit(): void {}
 
   private buildForm() {
-    this.form = new FormGroup({
-      bienServicio: new FormControl('', [Validators.required]),
-      cantidad: new FormControl('', [Validators.required]),
-      unidad: new FormControl('', [Validators.required]),
-      codigo: new FormControl('', [Validators.required]),
-      description: new FormControl('', [Validators.maxLength(360)]),
-      impuestoBolsas: new FormControl('', [Validators.required]),
-      precioUnidad: new FormControl('', [Validators.required]),
-      descuento: new FormControl('', [Validators.required]),
-      igv: new FormControl('', [Validators.required]),
+    this.form = this.formBuilder.group({
+      bienServicio: ['', Validators.required],
+      cantidad: ['', [Validators.required, Validators.min(0)]],
+      unidad: ['', Validators.required],
+      codigo: ['', Validators.required],
+      description: ['', [Validators.required, Validators.maxLength(100)]],
+      impuestoBolsas: ['', Validators.required],
+      precioUnidad: ['', [Validators.required, Validators.min(0)]],
+      descuento: ['', [Validators.required, Validators.min(0)]],
+      igv: ['', Validators.required],
     });
 
-    this.form.valueChanges.subscribe((value) => {
-      console.log(value);
-    });
+    // this.form.valueChanges.subscribe((value) => {
+    //   console.log(value);
+    // });
   }
   handleSubmit(event: Event): void {
     event.preventDefault();
-    const DataTemp = this.form.value;
-    let Data;
-    if (DataTemp.descuento > 0) {
-      const descuento =
-        (DataTemp.cantidad * DataTemp.precioUnidad * DataTemp.descuento) / 100;
-      const totalPago = DataTemp.cantidad * DataTemp.precioUnidad;
-      Data = {
-        ...DataTemp,
-        precioTotal: totalPago - descuento,
-      };
-    } else {
-      const descuento = DataTemp.cantidad * DataTemp.precioUnidad;
-      Data = {
-        ...DataTemp,
-        precioTotal: descuento,
-      };
-    }
+    if (this.form.valid) {
+      const Data = this.form.value;
 
-    this.products.push(Data);
-    // console.log(Data);
+      this.subTotal = this.subTotal + Data.cantidad * Data.precioUnidad;
+
+      const DescuentoTemp =
+        (Data.cantidad * Data.precioUnidad * Data.descuento) / 100;
+      this.descuento = this.descuento + DescuentoTemp;
+
+      const IgvTemp = (Data.cantidad * Data.precioUnidad * 18) / 100;
+
+      this.igv = this.igv + IgvTemp;
+
+      console.log(this.igv);
+
+      if (Data.impuestoBolsas === 'si') {
+        const ImpBolsasTemp = (Data.cantidad * Data.precioUnidad * 5) / 100;
+        this.impBolsas = this.impBolsas + ImpBolsasTemp;
+      }
+      const DataTemp = {
+        ...Data,
+        precioTotal: Data.cantidad * Data.precioUnidad,
+      };
+      this.total =
+        this.total + this.subTotal + this.impBolsas + this.igv - this.descuento;
+      console.log(this.total);
+      this.products.push(DataTemp);
+    } else {
+      console.log('complete todos los campos!');
+      this.form.markAllAsTouched();
+    }
   }
 }

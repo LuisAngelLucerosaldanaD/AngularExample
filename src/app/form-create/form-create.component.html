@@ -235,6 +235,22 @@
                 required
               />
             </div>
+            <div
+              *ngIf="
+                form.get('precioUnidad').errors &&
+                form.get('precioUnidad').touched
+              "
+            >
+              <div
+                *ngIf="form.get('precioUnidad').hasError('required')"
+                class="text-danger col-sm-20"
+              >
+                El precio por unidad de producto es requerido!.
+              </div>
+              <p *ngIf="form.get('precioUnidad') >= 0" class="text-danger">
+                EL precio por unidad de producto debe de ser mayor a 0!;
+              </p>
+            </div>
           </div>
           <div class="input-descuento form-group row">
             <label for="descuento" class="col-sm-2 col-form-label">
@@ -249,6 +265,21 @@
                 formControlName="descuento"
                 required
               />
+            </div>
+            <div
+              *ngIf="
+                form.get('descuento').errors && form.get('descuento').touched
+              "
+            >
+              <div *ngIf="form.get('descuento').hasError('required')">
+                <p class="text-danger">
+                  El descuento es requerido, si no hay descuento solo ingrese un
+                  0!
+                </p>
+              </div>
+              <p *ngIf="form.get('descuento') >= 0">
+                Eldescuento no puede ser negativo!.
+              </p>
             </div>
           </div>
           <div class="selecte-igv form-group row">
@@ -300,9 +331,9 @@
             <th>Total</th>
           </tr>
         </thead>
-        <tbody *ngFor="let product of products">
+        <tbody *ngFor="let product of products; let i = index">
           <tr>
-            <th scope="row">1</th>
+            <th scope="row">0{{ i + 1 }}</th>
             <td>{{ product.description }}</td>
             <td>{{ product.cantidad }}</td>
             <td>{{ product.precioUnidad }}</td>
@@ -310,9 +341,57 @@
           </tr>
         </tbody>
       </table>
-      <div class="">
-        <div class=""></div>
-        <div class=""></div>
+      <div class="row">
+        <div class="col"></div>
+        <div class="col">
+          <div class="row">
+            <div class="col">
+              <div>
+                Sub Total:
+              </div>
+              <div>
+                IGV:
+              </div>
+              <div>
+                imp bolsas:
+              </div>
+              <div>
+                T. Descuento:
+              </div>
+            </div>
+            <div class="col">
+              <div>
+                {{ subTotal }}
+              </div>
+              <div>
+                18%
+              </div>
+              <div>
+                {{ impBolsas }}
+              </div>
+              <div>
+                {{ descuento }}
+              </div>
+            </div>
+          </div>
+
+          <hr />
+          <div>
+            <div class="row">
+              <div class="col">
+                TOTAL:
+              </div>
+              <div class="col">
+                {{ subTotal + igv + impBolsas - descuento }}
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <button type="button" class="btn btn-outline-success form-control">
+              GENERAR COMPROBANTE
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   </div>
