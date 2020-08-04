@@ -1,0 +1,319 @@
+<div class="container">
+  <div class="row">
+    <div class="container-left col">
+      <div class="block-1 form-group">
+        <div class="selectores form-group row">
+          <div class="selector-1 col-sm-5">
+            <select
+              name="tipoComprobante"
+              class="custom-select"
+              id="tipoComprobante"
+            >
+              <option selected hidden>
+                Tipo de comprobante
+              </option>
+              <option>
+                Factura
+              </option>
+              <option>
+                Boleta
+              </option>
+            </select>
+          </div>
+          <div class="selector-2 col-sm-7">
+            <select name="documento" class="custom-select" id="documento">
+              <option selected hidden>
+                Documento Nacional de Identidad
+              </option>
+              <option>
+                Con Documento de Nacional de Identidad
+              </option>
+              <option>
+                Sin Documento de Nacional de Identidad
+              </option>
+            </select>
+          </div>
+        </div>
+        <div class="inputs">
+          <div class="N-documento form-group row">
+            <label for="inputDocumento" class="col-sm-2 col-form-label"
+              >DNI:
+            </label>
+            <div class="col-sm-10">
+              <input
+                type="number"
+                class="input-documento form-control"
+                placeholder="Ingrese el numero de documento"
+                name="inputDocumento "
+                id="inputDocumento"
+                required
+              />
+            </div>
+          </div>
+          <div class="nombre-denominación form-group row">
+            <label for="nombreDonominación" class="col-sm-5 col-form-label">
+              Nombre o Denominación
+            </label>
+            <div class="col-sm-7">
+              <input
+                type="text"
+                class="input-denominación form-control"
+                placeholder="Ingrese el nombre o la denominación"
+                name="nombreDonominación"
+                id="nombreDonominación"
+                required
+              />
+            </div>
+          </div>
+          <div class="input-address form-group row">
+            <label for="address" class="col-sm-2 col-form-label">
+              Dirección
+            </label>
+            <div class="col-sm-10">
+              <input
+                type="text"
+                class="address form-control"
+                placeholder="Ingrese la dirección"
+                name="address"
+                id="address"
+                required
+              />
+            </div>
+          </div>
+          <div class="input-date form-group row">
+            <label for="date" class="col-sm-5 col-form-label">
+              Fecha de emisión
+            </label>
+            <div class="col-sm-7">
+              <input
+                type="date"
+                class="date form-control"
+                placeholder="20-02-2020"
+                name="date"
+                id="date"
+                required
+              />
+            </div>
+          </div>
+          <hr />
+        </div>
+      </div>
+      <div class="block-2 form-group">
+        <form [formGroup]="form" (ngSubmit)="handleSubmit($event)">
+          <div class="input-tipo form-group">
+            <div class="radio-bien form-check form-check-inline">
+              <input
+                type="radio"
+                class="bien form-check-input"
+                id="bien"
+                name="bienServicio"
+                formControlName="bienServicio"
+                value="bien"
+              />
+              <label for="bien" class="form-check-label">Bien</label>
+            </div>
+            <div class="radio-servicio form-check form-check-inline">
+              <input
+                type="radio"
+                class="servicio form-check-input"
+                name="bienServicio"
+                id="servicio"
+                formControlName="bienServicio"
+                value="servicio"
+              />
+              <label for="servicio" class="form-check-label">Servicio</label>
+            </div>
+          </div>
+          <div class="input-cantidad form-group row">
+            <label for="cantidad" class="col-sm-2 col-form-label"
+              >Cantidad:
+            </label>
+            <div class="col-sm-10">
+              <input
+                type="number"
+                class="Cantidad form-control"
+                placeholder="0"
+                id="cantidad"
+                name="cantidad"
+                formControlName="cantidad"
+                required
+              />
+            </div>
+          </div>
+          <div class="select-unidad form-group row">
+            <label for="unidad" class="col-sm-3 col-form-label"
+              >Und/Medida:</label
+            >
+            <div class="col-sm-9">
+              <select
+                name="unidad"
+                class="unidad custom-select"
+                id="unidad"
+                formControlName="unidad"
+                required
+              >
+                <option selected hidden>
+                  Tipo de unidad
+                </option>
+                <option value="caja">
+                  Caja
+                </option>
+                <option value="bolsa">
+                  Bolsa
+                </option>
+              </select>
+            </div>
+          </div>
+          <div class="input-codigo form-group row">
+            <label for="codigo" class="col-sm-2 col-form-label">Codigo: </label>
+            <div class="col-sm-10">
+              <input
+                type="number"
+                class="codigo form-control"
+                placeholder="0000000"
+                name="codigo"
+                formControlName="codigo"
+                id="codigo"
+                required
+              />
+            </div>
+          </div>
+          <div class="input-descripción form-group row">
+            <label for="description" class="col-sm-2 col-form-label">
+              Descripción:
+            </label>
+            <div class="col-sm-10">
+              <textarea
+                maxlength="360"
+                class="description form-control"
+                placeholder="Descripción del producto"
+                id="desciption"
+                name="description"
+                formControlName="description"
+                required
+              ></textarea>
+            </div>
+          </div>
+          <div class="radio-impuesto form-group row">
+            <label for="radio-group" class="col-sm-7 col-form-label"
+              >Impuesto por bolsas plasticas:
+            </label>
+            <div class="col-sm-4" id="radio-group">
+              <div class="radio-1 form-check form-check-inline">
+                <input
+                  type="radio"
+                  class="radio-si form-check-input"
+                  name="impuestoBolsas"
+                  formControlName="impuestoBolsas"
+                  value="si"
+                />
+                <label for="radioSi" class="form-check-label">Si </label>
+              </div>
+              <div class="radio-2 form-check form-check-inline">
+                <input
+                  type="radio"
+                  class="radio-no form-check-input"
+                  name="impuestoBolsas"
+                  formControlName="impuestoBolsas"
+                  value="no"
+                />
+                <label for="radio2" class="form-check-label">No </label>
+              </div>
+            </div>
+          </div>
+          <div class="input-precio form-group row">
+            <label for="precioUnitario" class="col-sm-5 col-form-label"
+              >Precio por unidad:
+            </label>
+            <div class="col-sm-7">
+              <input
+                type="number"
+                class="precio-unitario form-control"
+                placeholder="00.0"
+                formControlName="precioUnidad"
+                name="precioUnitario"
+                required
+              />
+            </div>
+          </div>
+          <div class="input-descuento form-group row">
+            <label for="descuento" class="col-sm-2 col-form-label">
+              Descuento:
+            </label>
+            <div class="col-sm-10">
+              <input
+                type="number"
+                class="descuento form-control"
+                placeholder="00.0"
+                name="descuento"
+                formControlName="descuento"
+                required
+              />
+            </div>
+          </div>
+          <div class="selecte-igv form-group row">
+            <label for="igv" class="col-sm-2 col-form-label">
+              IGV 18%
+            </label>
+            <select
+              class="select-igv col-sm-10 custom-select"
+              name="igv"
+              formControlName="igv"
+            >
+              <option selected hidden>Gravado</option>
+              <option value="exonerado">
+                Exonerado
+              </option>
+              <option value="inafecto">
+                Inafecto
+              </option>
+            </select>
+          </div>
+          <div class="buttons form-group row text-center">
+            <button
+              class="btn btn-primary btn-block"
+              type="submit"
+              name="btnAgregar"
+            >
+              Agregar
+            </button>
+
+            <button
+              class="btn btn-danger btn-block"
+              name="btnCancelar"
+              type="button"
+            >
+              Cancelar
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="container-rigth col">
+      <table class="table table-bordered">
+        <thead class="thead-dark">
+          <tr>
+            <th>N°</th>
+            <th>Producto</th>
+            <th>Cant</th>
+            <th>P/U</th>
+            <th>Total</th>
+          </tr>
+        </thead>
+        <tbody *ngFor="let product of products">
+          <tr>
+            <th scope="row">1</th>
+            <td>{{ product.description }}</td>
+            <td>{{ product.cantidad }}</td>
+            <td>{{ product.precioUnidad }}</td>
+            <td>{{ product.precioTotal }}</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="">
+        <div class=""></div>
+        <div class=""></div>
+      </div>
+    </div>
+  </div>
+</div>
